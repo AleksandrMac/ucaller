@@ -24,6 +24,7 @@ func main() {
             Code:   &code,
             Client: &client,
             Unique: &unique,
-        })
+        }
+    )
 }
 ```
