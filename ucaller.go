@@ -3,7 +3,7 @@ package ucaller
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"sync"
 	"time"
@@ -58,15 +58,31 @@ type InputData struct {
 }
 
 type Service struct {
-	sync.RWMutex
+	mux              sync.RWMutex
 	secretKey        string
 	id               uint32
 	freeRepeatTime   time.Duration
 	freeRepeatNumber uint8
 	// cписок ucaller_id звонков. на первом месте ucaller_id из метода initCall,
 	// каждый последующий потомок предидущего
-	Calls map[ID][]ID
+	calls map[ID][]ID
 	Requester
+}
+
+func (s *Service) Calls(id ID) []ID {
+	s.mux.RLock()
+	ids, ok := s.calls[id]
+	s.mux.RUnlock()
+	if !ok {
+		return nil
+	}
+	return ids
+}
+
+func (s *Service) AddCalls(uID ID) {
+	s.mux.RLock()
+	s.calls[uID] = append(s.calls[uID], uID)
+	s.mux.RUnlock()
 }
 
 func New(i *InputData, req Requester) (*Service, error) {
@@ -79,7 +95,7 @@ func New(i *InputData, req Requester) (*Service, error) {
 			id:               i.ID,
 			freeRepeatTime:   i.FreeRepeatTime,
 			freeRepeatNumber: i.FreeRepeatNumber,
-			Calls:            map[ID][]ID{},
+			calls:            map[ID][]ID{},
 			Requester:        req,
 		}, nil
 	}
@@ -89,12 +105,12 @@ func New(i *InputData, req Requester) (*Service, error) {
 type Client struct{}
 
 func (c *Client) Get(url string) (body []byte, err error) {
-	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", APIURL, url), nil)
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", APIURL, url), http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	defer req.Body.Close()
 
-	body, err = ioutil.ReadAll(req.Body)
+	body, err = io.ReadAll(req.Body)
 	return
 }

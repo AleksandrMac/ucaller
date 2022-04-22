@@ -37,13 +37,13 @@ type ResponseInitRepeat struct {
 }
 
 func (s *Service) InitRepeat(uid ID) (r *ResponseInitRepeat, err error) {
-	s.RLock()
-	_, ok := s.Calls[uid]
-	s.RUnlock()
+	s.mux.RLock()
+	_, ok := s.calls[uid]
+	s.mux.RUnlock()
 	if !ok {
 		return nil, fmt.Errorf("ucaller_id не найден или истек")
 	}
-	if len(s.Calls[uid]) > int(s.freeRepeatNumber) {
+	if len(s.calls[uid]) > int(s.freeRepeatNumber) {
 		clearCalls(uid, s)
 		return nil, fmt.Errorf("превышено количество бесплатных повторов")
 	}
@@ -62,9 +62,9 @@ func (s *Service) InitRepeat(uid ID) (r *ResponseInitRepeat, err error) {
 		return r, errors.New(r.Error)
 	}
 	//     Повторная бесплатная авторизация успешно инициализирована
-	s.Lock()
+	s.mux.Lock()
 	// добавляем r.ID повтора, в цепочку звонков основаных входящим uid
-	s.Calls[uid] = append(s.Calls[uid], r.ID)
-	s.Unlock()
+	s.calls[uid] = append(s.calls[uid], r.ID)
+	s.mux.Unlock()
 	return r, nil
 }

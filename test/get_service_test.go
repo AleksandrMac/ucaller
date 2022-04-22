@@ -65,7 +65,7 @@ func TestGetService(t *testing.T) {
 				fmt.Println(err)
 				return
 			}
-			service.Calls[UID] = append(service.Calls[UID], UID)
+			service.AddCalls(UID)
 			testCase.mockBehavior(requester, service)
 			resp, err := service.GetService()
 			if err != nil {

@@ -84,7 +84,7 @@ func TestInitRepeat(t *testing.T) {
 				fmt.Println(err)
 				return
 			}
-			service.Calls[UID] = append(service.Calls[UID], UID)
+			service.AddCalls(UID)
 			testCase.mockBehavior(requester, service, UID)
 			resp, err := service.InitRepeat(UID)
 			if err != nil {

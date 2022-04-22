@@ -3,9 +3,11 @@ package ucaller_test
 import (
 	"fmt"
 	"strconv"
+	"sync"
 	"testing"
 	"time"
 
+	"github.com/AleksandrMac/ucaller"
 	u "github.com/AleksandrMac/ucaller"
 	mock_ucaller "github.com/AleksandrMac/ucaller/mocks"
 	"github.com/golang/mock/gomock"
@@ -217,10 +219,12 @@ func TestUCallerClearCalls(t *testing.T) {
 			}
 
 			time.Sleep(testCase.inputData.FreeRepeatTime)
-			service.RWMutex.RLock()
-			_, ok := service.Calls[testCase.uids[0]]
-			service.RWMutex.RUnlock()
-			assert.Equal(t, false, ok)
+			var mux sync.RWMutex
+			mux.RLock()
+			ids := service.Calls(testCase.uids[0])
+			mux.RUnlock()
+			var u []ucaller.ID
+			assert.Equal(t, u, ids)
 		})
 	}
 }

@@ -70,11 +70,11 @@ type ResponseInfo struct {
 }
 
 func (s *Service) GetInfo(uid ID) (r *ResponseInfo, err error) {
-	s.RLock()
-	if _, ok := s.Calls[uid]; !ok {
+	s.mux.RLock()
+	if _, ok := s.calls[uid]; !ok {
 		return nil, fmt.Errorf("ucaller_id не найден или истек")
 	}
-	s.RUnlock()
+	s.mux.RUnlock()
 
 	body, err := s.Get(fmt.Sprintf("/getInfo?service_id=%d&key=%s&ucaller_id=%d", s.id, s.secretKey, uid))
 	if err != nil {

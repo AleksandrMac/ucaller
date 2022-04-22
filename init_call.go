@@ -75,7 +75,7 @@ func (s *Service) InitCall(ic *InitCall) (r *ResponseInitCall, err error) {
 		return r, errors.New(r.Error)
 	}
 
-	s.Calls[r.ID] = append(s.Calls[r.ID], r.ID)
+	s.calls[r.ID] = append(s.calls[r.ID], r.ID)
 	// запускаем горутину которая удалит информаци о цепочке звонков с истекшей
 	// возможностью для инициализации повтора звонка
 	go func() {
@@ -114,12 +114,12 @@ func GetInitCallURL(s *Service, ic *InitCall) (string, error) {
 
 // clearCalls очищает цепочку звонков начатых с firstUCallerID
 func clearCalls(uid ID, s *Service) {
-	s.RLock()
-	_, ok := s.Calls[uid]
-	s.RUnlock()
+	s.mux.RLock()
+	_, ok := s.calls[uid]
+	s.mux.RUnlock()
 	if ok {
-		s.Lock()
-		delete(s.Calls, uid)
-		s.Unlock()
+		s.mux.Lock()
+		delete(s.calls, uid)
+		s.mux.Unlock()
 	}
 }
