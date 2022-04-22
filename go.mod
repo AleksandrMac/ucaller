@@ -1,4 +1,4 @@
-module github.com/AleksandrMac/ucaller/v1
+module github.com/AleksandrMac/ucaller
 
 go 1.18
 
