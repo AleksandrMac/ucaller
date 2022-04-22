@@ -7,9 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AleksandrMac/ucaller"
-	u "github.com/AleksandrMac/ucaller"
 	mock_ucaller "github.com/AleksandrMac/ucaller/mocks"
+	u "github.com/AleksandrMac/ucaller/v1"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 )
@@ -223,7 +222,7 @@ func TestUCallerClearCalls(t *testing.T) {
 			mux.RLock()
 			ids := service.Calls(testCase.uids[0])
 			mux.RUnlock()
-			var u []ucaller.ID
+			var u []u.ID
 			assert.Equal(t, u, ids)
 		})
 	}

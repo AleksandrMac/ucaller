@@ -7,7 +7,7 @@ package mock_ucaller
 import (
 	reflect "reflect"
 
-	ucaller "github.com/AleksandrMac/ucaller"
+	"github.com/AleksandrMac/ucaller/v1"
 	gomock "github.com/golang/mock/gomock"
 )
 
