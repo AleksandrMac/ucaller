@@ -41,7 +41,7 @@ type ResponseInitCall struct {
 	Phone string `json:"phone"`
 
 	// код, который будет последними цифрами в номере телефона
-	Code string `json:"code"`
+	Code interface{} `json:"code"`
 
 	// идентификатор пользователя переданный клиентом
 	Client string `json:"client"`
