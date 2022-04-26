@@ -76,7 +76,7 @@ func (s *Service) GetInfo(uid ID) (r *ResponseInfo, err error) {
 	}
 	s.mux.RUnlock()
 
-	body, err := s.Get(fmt.Sprintf("/getInfo?service_id=%d&key=%s&ucaller_id=%d", s.id, s.secretKey, uid))
+	body, err := s.Get(fmt.Sprintf("/getInfo?service_id=%d&key=%s&uid=%d", s.id, s.secretKey, uid))
 	if err != nil {
 		return nil, err
 	}

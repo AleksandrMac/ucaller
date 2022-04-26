@@ -77,7 +77,7 @@ func TestUCallerClearCalls(t *testing.T) {
 						`,"exists": true}`),
 					nil)
 				for i := 1; i < len(uids); i++ {
-					uc.EXPECT().Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&ucaller_id=%d", InputData.ID, InputData.SecretKey, uids[i])).Return(
+					uc.EXPECT().Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&uid=%d", InputData.ID, InputData.SecretKey, uids[i])).Return(
 						[]byte(`{`+
 							`"status":true`+
 							`,"ucaller_id":`+strconv.Itoa(int(uids[i]))+
@@ -125,7 +125,7 @@ func TestUCallerClearCalls(t *testing.T) {
 		// 				`,"exists": true}`),
 		// 			nil)
 		// 		for i := 1; i < len(uids)-1; i++ {
-		// 			uc.EXPECT().Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&ucaller_id=%d", InputData.ID, InputData.SecretKey, uids[i])).Return(
+		// 			uc.EXPECT().Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&uid=%d", InputData.ID, InputData.SecretKey, uids[i])).Return(
 		// 				[]byte(`{`+
 		// 					`"status":true`+
 		// 					`,"ucaller_id":`+strconv.Itoa(int(uids[i]))+
@@ -176,7 +176,7 @@ func TestUCallerClearCalls(t *testing.T) {
 						`,"exists": true}`),
 					nil)
 				for i := 1; i < len(uids)-1; i++ {
-					uc.EXPECT().Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&ucaller_id=%d", InputData.ID, InputData.SecretKey, uids[i])).Return(
+					uc.EXPECT().Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&uid=%d", InputData.ID, InputData.SecretKey, uids[i])).Return(
 						[]byte(`{`+
 							`"status":true`+
 							`,"ucaller_id":`+strconv.Itoa(int(uids[i]))+

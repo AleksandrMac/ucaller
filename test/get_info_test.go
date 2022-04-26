@@ -26,7 +26,7 @@ func TestGetInfo(t *testing.T) {
 			name:     "Ok",
 			inputUid: UID,
 			mockBehavior: func(uc *mock_ucaller.MockRequester, s *u.Service, uid u.ID) {
-				uc.EXPECT().Get(fmt.Sprintf("/getInfo?service_id=%d&key=%s&ucaller_id=%d", InputData.ID, InputData.SecretKey, uid)).Return(
+				uc.EXPECT().Get(fmt.Sprintf("/getInfo?service_id=%d&key=%s&uid=%d", InputData.ID, InputData.SecretKey, uid)).Return(
 					[]byte(`{`+
 						`"status":true`+
 						`,"ucaller_id":`+strconv.Itoa(int(UID))+

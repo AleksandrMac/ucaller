@@ -48,7 +48,7 @@ func (s *Service) InitRepeat(uid ID) (r *ResponseInitRepeat, err error) {
 		return nil, fmt.Errorf("превышено количество бесплатных повторов")
 	}
 
-	body, err := s.Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&ucaller_id=%d", s.id, s.secretKey, uid))
+	body, err := s.Get(fmt.Sprintf("/initRepeat?service_id=%d&key=%s&uid=%d", s.id, s.secretKey, uid))
 	if err != nil {
 		return nil, err
 	}
