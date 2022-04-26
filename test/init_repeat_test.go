@@ -32,8 +32,8 @@ func TestInitRepeat(t *testing.T) {
 					[]byte(`{`+
 						`"status":true`+
 						`,"ucaller_id":`+strconv.Itoa(int(uid))+
-						`,"phone":`+strconv.Itoa(int(phone))+
-						`,"code":`+strconv.Itoa(int(code))+
+						`,"phone":"`+phoneMask+`"`+
+						`,"code":"`+strconv.Itoa(int(code))+`"`+
 						`,"client":"`+client+`"`+
 						`,"unique_request_id":"`+unique+`"`+
 						`,"exists":true`+
@@ -43,8 +43,8 @@ func TestInitRepeat(t *testing.T) {
 			expectedResponseInitRepeat: &u.ResponseInitRepeat{
 				Status:          true,
 				ID:              UID,
-				Phone:           phone,
-				Code:            code,
+				Phone:           phoneMask,
+				Code:            fmt.Sprintf("%d", code),
 				Client:          client,
 				UniqueRequestID: uuid.MustParse(unique),
 				Exists:          true,
@@ -61,12 +61,12 @@ func TestInitRepeat(t *testing.T) {
 					[]byte(`{`+
 						`"status": false`+
 						`,"error": "This uCaller ID is already repeated"`+
-						`,"code":13}`),
+						`,"code":"13"}`),
 					nil)
 			},
 			expectedResponseInitRepeat: &u.ResponseInitRepeat{
 				Status: false,
-				Code:   13,
+				Code:   "13",
 				Error:  "This uCaller ID is already repeated",
 			},
 			expectedError: errors.New("This uCaller ID is already repeated"),

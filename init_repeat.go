@@ -16,10 +16,10 @@ type ResponseInitRepeat struct {
 	ID ID `json:"ucaller_id"`
 
 	// номер телефона, куда мы совершили звонок
-	Phone uint64 `json:"phone"`
+	Phone string `json:"phone"`
 
 	// код, который будет последними цифрами в номере телефона
-	Code uint16 `json:"code"`
+	Code string `json:"code"`
 
 	// идентификатор пользователя переданный клиентом
 	Client string `json:"client"`

@@ -37,8 +37,8 @@ func TestInitCall(t *testing.T) {
 					[]byte(`{`+
 						`"status": true`+
 						`,"ucaller_id": 103000`+
-						`,"phone":`+strconv.Itoa(int(phone))+
-						`,"code":`+strconv.Itoa(int(code))+
+						`,"phone":"`+phoneMask+`"`+
+						`,"code":"`+strconv.Itoa(int(code))+`"`+
 						`,"client":"`+client+`"`+
 						`,"unique_request_id":"`+unique+`"`+
 						`,"exists": true}`),
@@ -47,8 +47,8 @@ func TestInitCall(t *testing.T) {
 			expectedResponseInitCall: &u.ResponseInitCall{
 				Status:          true,
 				ID:              103000,
-				Phone:           phone,
-				Code:            code,
+				Phone:           phoneMask,
+				Code:            fmt.Sprintf("%d", code),
 				Client:          client,
 				UniqueRequestID: uuid.MustParse(unique),
 				Exists:          true,
@@ -69,12 +69,12 @@ func TestInitCall(t *testing.T) {
 					[]byte(`{`+
 						`"status": false`+
 						`,"error": "Ваш IP адрес заблокирован"`+
-						`,"code":0}`),
+						`,"code":"0"}`),
 					nil)
 			},
 			expectedResponseInitCall: &u.ResponseInitCall{
 				Status: false,
-				Code:   0,
+				Code:   "0",
 				Error:  "Ваш IP адрес заблокирован",
 			},
 			expectedError: errors.New("Ваш IP адрес заблокирован"),
