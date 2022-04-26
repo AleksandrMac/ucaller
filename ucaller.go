@@ -12,7 +12,7 @@ import (
 const (
 	MaxCode            uint16 = 9999
 	MaxLenForSecretKey int    = 32
-	APIURL             string = "https://api.ucaller.ru"
+	APIURL             string = "https://api.ucaller.ru/v1.0"
 )
 
 type ID uint64
