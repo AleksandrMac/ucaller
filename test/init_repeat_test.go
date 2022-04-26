@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"testing"
 
+	u "github.com/AleksandrMac/ucaller"
 	mock_ucaller "github.com/AleksandrMac/ucaller/mocks"
-	u "github.com/AleksandrMac/ucaller/v1"
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
