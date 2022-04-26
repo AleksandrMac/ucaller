@@ -12,7 +12,7 @@ import (
 const (
 	MaxCode            uint16 = 9999
 	MaxLenForSecretKey int    = 32
-	APIURL             string = "https://api.ucaller.ru/v1.0"
+	APIURL             string = "https://api.ucaller.ru"
 )
 
 type ID uint64
@@ -105,12 +105,12 @@ func New(i *InputData, req Requester) (*Service, error) {
 type Client struct{}
 
 func (c *Client) Get(url string) (body []byte, err error) {
-	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s%s", APIURL, url), http.NoBody)
+	resp, err := http.Get(fmt.Sprintf("%s%s", APIURL, url))
 	if err != nil {
 		return nil, err
 	}
-	defer req.Body.Close()
+	defer resp.Body.Close()
 
-	body, err = io.ReadAll(req.Body)
+	body, err = io.ReadAll(resp.Body)
 	return
 }
